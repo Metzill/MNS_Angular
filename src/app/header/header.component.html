@@ -1,0 +1,14 @@
+<div class="navbar bg-primary text-base-100">
+  <div class="flex-1">
+    <a class="btn btn-ghost normal-case text-base-100 text-xl" routerLink="/">daisyUI</a>
+  </div>
+  <div class="flex-none">
+    <ul class="space-x-2">
+      <li class="btn btn-secondary" *ngIf="token"><a routerLink="/usersList">Liste des utilisateurs</a></li>
+      <li class="btn btn-secondary" *ngIf="token"><a routerLink="/articlesList">Liste des articles</a></li>
+      <li class="btn btn-secondary" *ngIf="token"><a routerLink="/signin">Deconnexion</a></li>
+      <li class="btn btn-secondary" *ngIf="!token"><a routerLink="/signin">Connexion</a></li>
+      <li class="btn btn-secondary" *ngIf="!token"><a routerLink="/signup">Inscription</a></li>
+    </ul>
+  </div>
+</div>

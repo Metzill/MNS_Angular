@@ -1,0 +1,16 @@
+<section>
+    <div class="container flex mx-auto">
+        <div class="card w-96 bg-neutral shadow-xl flex mx-auto">
+            <div class="card-body">
+                <h2 class="card-title text-primary">Inscription</h2>
+                <form [formGroup]="signupForm" (ngSubmit)="submitForm()">
+                    <input class="input input-bordered w-full max-w-xs" type="text" placeholder="E-mail" formControlName="mail">
+                    <input class="input input-bordered w-full max-w-xs" type="text" placeholder="Login" formControlName="pseudo">
+                    <input class="input input-bordered w-full max-w-xs" type="text" placeholder="Mot de passe" formControlName="pass">
+                    <input class="input input-bordered w-full max-w-xs" type="text" placeholder="Confirmez le mot de passe" formControlName="passConfirm">
+                    <input class="input btn-secondary w-full max-w-xs" type="submit" value="Envoyer">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,127 @@
+<section>
+    <div class="container flex mx-auto text-primary">
+        <ul class="space-y-2 mx-auto min-w-full">
+            <li>
+                <div class="card bg-neutral shadow-xl flex mx-auto">
+                    <div class="card-body">
+                        <h2 class="card-title text-primary">Création d'article :</h2>
+                        <form class="space-y-2" [formGroup]="ajoutArticle" (ngSubmit)="submitForm()">
+                            <label class="block">
+                                <span class="block ">Titre</span>
+                                <input class="input input-bordered w-full max-w-xs" type="text" placeholder="Titre" formControlName="titre">
+                            </label>
+                            <label class="block">
+                                <span class="block">Contenu</span>
+                                <textarea class="input input-bordered w-full " name="aBody" id="aBody" cols="30" rows="5" placeholder="Contenu de l'article" formControlName="contenu"></textarea>
+                            </label>
+                            <input class="input btn-secondary w-full max-w-xs" type="submit" value="Envoyer">
+                        </form>
+                    </div>
+                </div>
+            </li>
+            <li *ngFor="let article of articleList">
+                <div class="card bg-neutral shadow-xl flex mx-auto">
+                    <div class="card-body">
+                        <div class="flex-1">
+                            <div class="grid grid-cols-2">
+                                <div> <h2 class="card-title text-primary">{{ article.titre }}</h2> </div>
+                                <div class="justify-self-end" *ngIf="article.writer" >Écrit par {{ article.writer }}</div>
+                            </div>
+                            <p>{{ article.contenu }}</p>
+                        </div>
+                        <div class="flex">
+                            <div class="space-x-1" *ngIf="article.id === this.id">
+                                <label for="my-modal-3" class="btn btn-accent modal-button text-neutral">Modifier</label>
+                                <input type="checkbox" id="my-modal-3" class="modal-toggle" />
+                                <div class="modal">
+                                    <div class="modal-box relative">
+                                        <label for="my-modal-3" class="btn btn-primary btn-sm btn-circle absolute right-2 top-2">✕</label>
+                                        <h2 class="card-title text-primary">Modification d'article :</h2>
+                                        <form class="space-y-2" [formGroup]="modifArticle" (ngSubmit)="updateArticle(article.id_article)">
+                                            <label class="block">
+                                                <span class="block ">Titre</span>
+                                                <input class="input input-bordered w-full max-w-xs" type="text" [placeholder]="article.titre" formControlName="mTitre">
+                                            </label>
+                                            <label class="block">
+                                                <span class="block">Contenu</span>
+                                                <textarea class="input input-bordered w-full " name="aBody" id="aBody" cols="30" rows="5" [placeholder]="article.contenu" formControlName="mContenu"></textarea>
+                                            </label>
+                                            <input class="input btn-secondary w-full max-w-xs" type="submit" value="Envoyer">
+                                        </form>
+                                    </div>
+                                </div>
+                                <label for="my-modal-4" class="btn btn-secondary modal-button text-neutral">Supprimer</label>
+                                <input type="checkbox" id="my-modal-4" class="modal-toggle" />
+                                <div class="modal">
+                                    <div class="modal-box relative">
+                                        <label for="my-modal-4" class="btn btn-primary btn-sm btn-circle absolute right-2 top-2">✕</label>
+                                        <h2 class="text-lg font-bold">Êtes-vous sûr de vouloir supprimer l'article ?</h2>
+                                        <div class="flex space-x-2">
+                                            <button (click)="deleteArticle(article.id_article)" class="btn btn-secondary">Oui</button>
+                                            <label for="my-modal-4" class="btn btn-accent">Non</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <ul>
+                                <li class="w-full">
+                                    <div class="">
+                                        <div class="space-x-1">
+                                            <div class="grid grid-cols-1">
+                                                <div class="justify-self-center">
+                                                    <label for="my-modal-5" (click)="setIdArticleToComment(article.id_article)" class="btn btn-accent modal-button text-neutral">Poster commentaire</label>
+                                                </div>
+                                            </div>
+                                            <input type="checkbox" id="my-modal-5" class="modal-toggle" />
+                                            <div class="modal">
+                                                <div class="modal-box relative">
+                                                    <label for="my-modal-5" class="btn btn-primary btn-sm btn-circle absolute right-2 top-2">✕</label>
+                                                    <h2 class="card-title text-primary">Commentaire :</h2>
+                                                    <form class="space-y-2" [formGroup]="ajoutComment" (ngSubmit)="postCom()">
+                                                        <label class="block">
+                                                            <span class="block ">Contenu</span>
+                                                            <textarea class="input input-bordered w-full" cols="30" rows="5" formControlName="nComContenu"></textarea>
+                                                        </label>
+                                                        <input class="btn btn-accent w-full text-neutral" type="submit" value="Envoyer">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="w-full" *ngFor="let comment of article.comments">
+                                    <div *ngIf="comment.id_commentaire != -1" class="w-full grid grid-cols-2 flex-1 border rounded-lg px-4 py-2 bg-gray-100" >
+                                        <div>
+                                            <h2 class="card-title text-primary">{{comment.auteur}}</h2>
+                                            <p>{{comment.contenu}}</p>
+                                        </div>
+                                        <div *ngIf="comment.id === this.id" class="justify-self-end">
+                                            <label for="my-modal-6" class="btn btn-accent modal-button text-neutral">Modifier</label>
+                                            <input type="checkbox" id="my-modal-6" class="modal-toggle" />
+                                            <div class="modal">
+                                                <div class="modal-box relative">
+                                                    <label for="my-modal-6" class="btn btn-primary btn-sm btn-circle absolute right-2 top-2">✕</label>
+                                                    <h2 class="card-title text-primary">Modification du commentaire :</h2>
+                                                    <form class="space-y-2" [formGroup]="modifComment" (ngSubmit)="updateCom(comment.id_commentaire)">
+                                                        <label class="block">
+                                                            <span class="block">Contenu</span>
+                                                            <textarea class="input input-bordered w-full " name="aBody" id="aBody" cols="30" rows="5" [placeholder]="comment.contenu" formControlName="mComContenu"></textarea>
+                                                        </label>
+                                                        <input class="input btn-secondary w-full max-w-xs" type="submit" value="Envoyer">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <button (click)="deleteCom(comment.id_commentaire)" class="btn btn-secondary">Supprimer</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>

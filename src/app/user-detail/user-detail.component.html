@@ -1,0 +1,70 @@
+<section class="p-4">
+    <div class="container flex mx-auto mt-4">
+        <div class="card w-96 bg-base-100  border border-2 border-solid border-[#A2A2A2] shadow-xl p-4">
+            <figure><img [src]="getUserDetails().avatar" alt="avatar" *ngIf="getUserDetails().avatar" /></figure>
+            <figure><img src="https://api.lorem.space/image?w=200&h=200" alt="avatar" *ngIf="!getUserDetails().avatar" /></figure>
+            <div class="card-body">
+              <h1 class="card-title">User : {{getUserDetails().pseudo}}</h1>
+              <p>Mail: {{getUserDetails().email}}</p>
+              <div *ngIf="getCurrUserId() == getUrlId()" class="space-x-2">
+                <label for="my-modal-3" class="btn btn-accent modal-button text-neutral">Modifier</label>
+                <input type="checkbox" id="my-modal-3" class="modal-toggle" />
+                <div class="modal">
+                    <div class="modal-box relative">
+                        <label for="my-modal-3" class="btn btn-primary btn-sm btn-circle absolute right-2 top-2">✕</label>
+                        <h2 class="card-title text-primary">Création d'article :</h2>
+                        <form class="space-y-2" [formGroup]="modifUser" (ngSubmit)="updateUser()">
+                            <label class="block">
+                                <span class="block ">Email</span>
+                                <input class="input input-bordered w-full max-w-xs" type="text" [placeholder]="" formControlName="nEmail">
+                            </label>
+                            <label class="block">
+                                <span class="block ">Pseudo</span>
+                                <input class="input input-bordered w-full max-w-xs" type="text" [placeholder]="" formControlName="nPseudo">
+                            </label>
+                            <label class="block">
+                                <span class="block ">Mot de passe</span>
+                                <input class="input input-bordered w-full max-w-xs" type="text" placeholder="Nouveau mot de passe" formControlName="nPass">
+                            </label>
+                            <label class="block">
+                                <span class="block ">Avatar(lien vers l'image)</span>
+                                <input class="input input-bordered w-full max-w-xs" type="text" placeholder="https://exemple.com/imageExemple.png" formControlName="nAvatar">
+                            </label>
+                            <input class="input btn-secondary w-full max-w-xs" type="submit" value="Envoyer">
+                        </form>
+                    </div>
+                </div>
+                <label for="my-modal-4" class="btn btn-secondary modal-button text-neutral">Supprimer</label>
+                <input type="checkbox" id="my-modal-4" class="modal-toggle" />
+                <div class="modal">
+                    <div class="modal-box relative">
+                        <label for="my-modal-4" class="btn btn-primary btn-sm btn-circle absolute right-2 top-2">✕</label>
+                        <h2 class="text-lg font-bold">Êtes-vous sûr de vouloir supprimer l'article ?</h2>
+                        <div class="flex space-x-2">
+                            <button (click)="deleteUser()" class="btn btn-secondary">Oui</button>
+                            <label for="my-modal-4" class="btn btn-accent">Non</label>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="card w-96 bg-base-100 border border-2 border-solid border-[#A2A2A2] shadow-xl flex mx-auto space-y-4 p-4">
+            <div>
+                <h1 class="card-title text-primary">Derniers articles</h1>
+            </div>
+            <div class="card-body border-2 border-solid border-accent rounded-md drop-shadow-md" *ngFor="let article of userArticle">
+                <h2 class="card-title text-primary">{{ article.titre }}</h2>
+                <p>{{ article.contenu }}</p> 
+            </div>
+        </div>
+        <div class="card w-96 bg-base-100  border border-2 border-solid border-[#A2A2A2] shadow-xl flex mx-auto space-y-4 p-4">
+            <div>
+                <h1 class="card-title text-primary">Derniers commentaires</h1>
+            </div>
+            <div class="card-body border-2 border-solid border-accent rounded-md drop-shadow-md" *ngFor="let comment of userComment">
+                <p>{{ comment.contenu }}</p> 
+            </div>
+        </div>
+    </div>
+</section>

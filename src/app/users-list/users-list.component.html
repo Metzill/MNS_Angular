@@ -1,0 +1,35 @@
+<section>
+    <div class="container flex mx-auto text-primary">
+        <div class="card  bg-neutral shadow-xl flex mx-auto">
+            <div class="card-body">
+                <div class="overflow-x-auto">
+                    <table class="table table-zebra w-full">
+                      <!-- head -->
+                      <thead>
+                        <tr>
+                          <th>Avatar</th>
+                          <th>Pseudo</th>
+                          <th>Mail</th>
+                          <th>Détails</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let user of usersList">
+                          <td>
+                            <div class="avatar">
+                              <div class="w-24 h-16 mask mask-hexagon-2">
+                                <img [src]="user.avatar"  />
+                              </div>
+                            </div>
+                          </td>
+                          <td>{{ user.pseudo }}</td>
+                          <td>{{ user.email }}</td>
+                          <td><a [routerLink]="['/user', user.id]" class="btn btn-secondary">Détails du profil</a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+        </div>
+    </div>
+</section>
